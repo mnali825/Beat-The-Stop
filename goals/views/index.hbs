@@ -1,0 +1,39 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}} {{user.username}}</p>
+
+<form method="post">
+  <input type="text" name="title" placeholder="title">
+  <input type="text" name="description" placeholder="description">
+  <input type="submit" name="" value="Set a Goal!" id="add">
+</form>
+
+<div id="goals">
+{{#each goal}}
+  <div class="goal">
+    <h1>{{title}}</h1>
+    {{#if description}}
+    <p>{{description}}</p>
+    {{/if}}
+    <button>Finished</button>
+    <button>Priority</button>
+  </div>
+{{/each}}
+</div>
+
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    var add = document.getElementById('add');
+    add.addEventListener('click', handleAddGoal);
+  }
+
+  function handleAddGoal(event) {
+    event.preventDefault();
+    var req = new XMLHttpRequest();
+    req.open('post', 'http://localhost:3000/get/goals', true);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    req.send('title='+title+'&'+'description='+description);
+  }
+</script>
