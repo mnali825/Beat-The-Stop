@@ -1,0 +1,33 @@
+<div class="navbar">
+  <ul>
+    <li class="logo"><a href="/home">goals</a></li>
+    <div class="links">
+    </div>
+  </ul>
+</div>
+
+<p>Welcome {{user.username}}</p>
+<a href="/home">Back to Goals</a>
+
+<form method="post" id="add-form">
+  <input type="text" placeholder="title" id="title">
+  <input type="text" placeholder="description" id="description">
+  <input type="submit" name="" value="Set a Goal!" id="add">
+</form>
+
+<div id="goals">
+{{#each completed}}
+  <div class="goal">
+    <h2>{{title}}</h2>
+    {{#if description}}
+    <p>{{description}}</p>
+    {{/if}}
+    <p>Started: {{startDate}}</p>
+    <p>Completed: {{endDate}}</p>
+    <p id="total-time"></p>
+    <input type="hidden" id="id" value="{{_id}}">
+  </div>
+{{/each}}
+</div>
+
+

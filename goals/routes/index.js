@@ -55,9 +55,16 @@ router.post('/registration', function(req, res) {
 });
 
 router.get('/home', function(req, res) {
-  User.findOne({'username':username}, function(err, user) {
-    res.render('index', {goal:user.goals});
-  });
+  if (username !== undefined) {
+    User.findOne({'username':username}, function(err, user) {
+      var list = user.goals.reverse();
+      console.log(list);
+      res.render('index', {goal:list});
+    });
+  } else {
+    res.redirect('/');
+  }
+  
 });
 
 router.get('/api/goals', function(req, res) {
@@ -65,7 +72,9 @@ router.get('/api/goals', function(req, res) {
     res.json(user.goals.map(function(ele) {
       return {
         "title":ele.title,
-        "description":ele.description
+        "description":ele.description,
+        "date":ele.startDate,
+        "_id":ele._id
       }
     }));
   })
@@ -83,6 +92,30 @@ router.post('/api/goals/create', function(req, res) {
       res.json(user.goals);
     });
   });
+});
+
+router.post('/api/finished-task', function(req, res) {
+  var id = req.body.id;
+  User.findOne({'username':username}, function(err, user) {
+    var finished = user.goals.id(id);
+    finished.endDate = Date.now();
+    user.completed.push(finished);
+    finished.remove();
+    user.save(function(err, user) {console.log('saved changes to db')});
+    console.log(user);
+  });
+});
+
+router.get('/completed', function(req, res) {
+  if (username !== undefined) {
+      User.findOne({'username':username}, function(err, user) {
+      var list = user.completed.reverse();
+      res.render('completed', {completed:list});
+    });  
+  } else {
+    res.redirect('/');
+  }
+  
 });
 
 module.exports = router;

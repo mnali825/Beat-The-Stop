@@ -5,13 +5,15 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var GoalSchema = new mongoose.Schema({
   title:String,
   description:String,
-  completed:Boolean,
+  startDate: {type:Date, default:Date.now()},
+  endDate:Date
 });
 
 var UserSchema = new mongoose.Schema({ 
   username:String,
   password:String,
-  goals:[GoalSchema]
+  goals:[GoalSchema],
+  completed:[GoalSchema]
 });
 // User.register (creating a new user)
 // User.authenticate (strategy)

@@ -1,21 +1,30 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}} {{user.username}}</p>
+<div class="navbar">
+  <ul>
+    <li class="logo"><a href="/home">goals</a></li>
+    <div class="links">
+    </div>
+  </ul>
+</div>
 
-<form method="post">
-  <input type="text" name="title" placeholder="title">
-  <input type="text" name="description" placeholder="description">
+<p>Welcome {{user.username}}</p>
+<a href="/completed">Completed Tasks</a>
+
+<form method="post" id="add-form">
+  <input type="text" placeholder="title" id="title">
+  <input type="text" placeholder="description" id="description">
   <input type="submit" name="" value="Set a Goal!" id="add">
 </form>
 
 <div id="goals">
 {{#each goal}}
   <div class="goal">
-    <h1>{{title}}</h1>
+    <h2>{{title}}</h2>
     {{#if description}}
     <p>{{description}}</p>
     {{/if}}
-    <button>Finished</button>
-    <button>Priority</button>
+    <p>{{startDate}}</p>
+    <input type="hidden" id="id" value="{{_id}}">
+    <button class="finished">Finished</button>
   </div>
 {{/each}}
 </div>
@@ -27,13 +36,82 @@
   function init() {
     var add = document.getElementById('add');
     add.addEventListener('click', handleAddGoal);
+    var finishedBtns = document.getElementsByClassName('finished');
+
+    Array.prototype.forEach.call(finishedBtns, function(ele) {
+      ele.addEventListener('click', handleFinishedTask);
+    });
   }
 
   function handleAddGoal(event) {
     event.preventDefault();
+    var title = document.getElementById('title').value;
+    var description = document.getElementById('description').value;
     var req = new XMLHttpRequest();
-    req.open('post', 'http://localhost:3000/get/goals', true);
+    req.open('post', 'http://localhost:3000/api/goals/create', true);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     req.send('title='+title+'&'+'description='+description);
+
+    var req2 = new XMLHttpRequest();
+    req2.open('get', 'http://localhost:3000/api/goals', true);
+
+    req2.addEventListener('load', function() {
+      if (req2.status >= 200 || req2.status < 400) {
+        var goals = JSON.parse(req2.responseText);
+        var goalsDiv = document.getElementById('goals');
+        var goalDiv = document.createElement('div');
+        var last = goals.length - 1;
+        goalDiv.appendChild(document.createElement('h2')).textContent = goals[last].title;
+        goalDiv.appendChild(document.createElement('p')).textContent = goals[last].description;
+        goalDiv.appendChild(document.createElement('p')).textContent = goals[last].date;
+        var hidden = document.createElement('input');
+        hidden.setAttribute('type', 'hidden');
+        hidden.setAttribute('id', 'id');
+        hidden.value = goals[last]._id;
+        console.log('here', goals[last]._id);
+        goalDiv.appendChild(hidden);
+        goalDiv.appendChild(document.createElement('button')).textContent = "Finished";
+
+        goalDiv.classList.add('goal');
+        goalsDiv.insertBefore(goalDiv, goalsDiv.firstChild);
+        var buttons = document.querySelectorAll('button');
+        buttons.forEach(function(ele) {
+          if (!ele.classList.contains('finished')) {
+            console.log('found a button!');
+            ele.classList.add('finished');
+            ele.addEventListener('click', function(event) {
+              var id = goals[last]._id;
+              console.log(id);
+
+              var req = new XMLHttpRequest();
+              req.open('post', 'http://localhost:3000/api/finished-task', true);
+              req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+              req.send('id='+id);
+
+              var div = this.parentNode.parentNode;
+              div.removeChild(this.parentNode);
+            });
+          }
+        });
+      }
+    });
+    req2.send();
+
+    //reset form elements after submission
+    var form = document.getElementById('add-form');
+    form.reset();
+  }
+
+  function handleFinishedTask(event) {
+    var id = this.previousSibling.previousSibling.value;
+    console.log(id);
+
+    var req = new XMLHttpRequest();
+    req.open('post', 'http://localhost:3000/api/finished-task', true);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    req.send('id='+id);
+
+    var div = this.parentNode.parentNode;
+    div.removeChild(this.parentNode);
   }
 </script>
