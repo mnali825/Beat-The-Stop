@@ -7,13 +7,16 @@
 
 <div id="container">
 
-<p id="welcome">Welcome {{user.username}}, you can set your goals below</p>
+<p id="welcome">Welcome {{user.username}}, press the + button to set a goal</p>
 
-<form method="post" id="add-form">
+<form method="post" id="add-form" class="hidden">
   <input type="text" placeholder="title" id="title">
   <input type="text" placeholder="description" id="description">
   <input type="submit" name="" value="Set a Goal!" id="add">
 </form>
+<div style="text-align:center;">
+<button id="show-form">+</button>
+</div>
 
 <div id="goals">
 {{#each goal}}
@@ -42,6 +45,17 @@
     Array.prototype.forEach.call(finishedBtns, function(ele) {
       ele.addEventListener('click', handleFinishedTask);
     });
+
+    var addGoalBtn = document.getElementById('show-form');
+    addGoalBtn.addEventListener('click', handleShowForm);
+
+    var addForm = document.getElementById('add-form');
+  }
+
+  function handleShowForm(event) {
+    var form = document.getElementById('add-form');
+    form.classList.remove('hidden');
+    this.classList.add('hidden');
   }
 
   function handleAddGoal(event) {
@@ -101,6 +115,8 @@
     //reset form elements after submission
     var form = document.getElementById('add-form');
     form.reset();
+    this.parentNode.classList.add('hidden');
+    document.getElementById('show-form').classList.remove('hidden');
   }
 
   function handleFinishedTask(event) {

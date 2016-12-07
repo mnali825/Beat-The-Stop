@@ -6,7 +6,8 @@ var GoalSchema = new mongoose.Schema({
   title:String,
   description:String,
   startDate: {type:Date, default:Date.now()},
-  endDate:Date
+  endDate:Date,
+  deltaDate:String
 });
 
 var UserSchema = new mongoose.Schema({ 
