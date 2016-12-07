@@ -1,0 +1,54 @@
+body {
+  /*padding: 50px;*/
+  margin:0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.post {
+  border:2px solid black;
+  padding: 50px;
+}
+
+.post-preview {
+  font-size: 1em;
+  line-height: 1.5em;
+  height: 4em;
+  overflow: hidden;
+}
+
+.post-full {
+  font-size: 1em;
+  line-height: 1em;
+}
+
+.tag {
+  height:1.5em;
+  width:100px;
+  background-color: gray;
+  padding:5px;
+  border-radius: 5px;
+}
+
+.tags {
+  display: inline;
+  width:100%;
+}
+
+.tags .header {
+  line-height: 2.5em;
+  margin-top: -30px;
+}
+
+.tags a {
+  text-decoration: none;
+  color:white;
+}
+
+.read-more {
+  text-align: right;
+  margin-right:3em;
+}

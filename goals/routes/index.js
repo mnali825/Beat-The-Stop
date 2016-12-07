@@ -48,6 +48,7 @@ router.post('/registration', function(req, res) {
       // NOTE: once you've registered, you should be logged in automatically
       // ...so call authenticate if there's no error
       passport.authenticate('local')(req, res, function() {
+        username = user.username;
         res.redirect('/home');
       });
     }

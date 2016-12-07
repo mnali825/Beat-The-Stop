@@ -1,0 +1,63 @@
+<img src="{{image}}" class="full-image">
+
+<div class="post" style="background-image:url({{image}});">
+  <h1 id="title">{{post.title}}</h1>
+  <div class="post-full">
+    <p>{{post.body}}</p>
+  </div>
+  <p>By: {{post.author}} - {{post.date}}</p>
+</div>
+
+{{#each post.comments}}
+<div id="comments">
+  <div class="comment">
+    <h4>{{comment}}</h4>
+    <p>By: {{user}}</p>
+  </div>
+</div>
+{{/each}}
+<form>
+  <input type="text" name="comment" id="comment">
+  <input type="text" name="user" value="anonymous" id="user">
+  <input type="submit" id="add-comment">
+</form>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    var submit = document.getElementById('add-comment');
+    submit.addEventListener('click', handleAddComment);
+    submit.addEventListener('click', handleUpdate);
+  }
+
+  function handleAddComment(event) {
+    event.preventDefault();
+    var req = new XMLHttpRequest();
+    req.open('POST', 'http://localhost:3000/admin/comments/add', true);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+
+    var comment = document.getElementById('comment').value;
+    var user = document.getElementById('user').value;
+    var title = document.getElementById('title').textContent;
+    req.send('comment='+comment+'&'+'user='+user+'&'+'title='+title);
+  }
+
+  function handleUpdate(event) {
+    var req = new XMLHttpRequest();
+    req.open('get', 'http://localhost:3000/admin/comments', true);
+
+    req.addEventListener('load', function() {
+      if (req.status >= 200 || req.status < 400) {
+        var comments = JSON.parse(req.responseText);
+        var last = comments.length - 1;
+        var div = document.createElement('div');
+        var oldDiv = document.getElementById('comments');
+        div.appendChild(document.createElement('h4')).textContent = comments[last].comment;
+        div.appendChild(document.createElement('p')).textContent = comments[last].user;
+        div.classList.add('comment');
+        oldDiv.appendChild(div);
+      }
+    });
+  }
+</script>

@@ -1,0 +1,18 @@
+<a href="/admin">Add blog post</a>
+
+{{#each post}}
+<div class="post" style="background-image:url({{image}});">
+  <a href="/posts/{{slug}}"><h1>{{title}}</h1></a>
+  <div class="post-preview">
+    <p>{{body}}</p>
+  </div>
+  <p class="read-more"><a href="/posts/{{slug}}">Read More</a></p>
+
+  <div class="tags">
+    <div class="header">Tags:</div>
+    <a href=""><div class="tag">{{tags}}</div></a>
+  </div>
+
+  <p>By: {{author}} - {{date}}</p>
+</div>
+{{/each}}
