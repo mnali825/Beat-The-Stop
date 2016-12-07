@@ -1,19 +1,13 @@
 <div class="navbar">
   <ul>
-    <li class="logo"><a href="/home">goals</a></li>
-    <div class="links">
-    </div>
+    <a href="/home"><li>goals</li></a>
+    <a href="/completed"><li>completed</li></a>
   </ul>
 </div>
 
-<p>Welcome {{user.username}}</p>
-<a href="/home">Back to Goals</a>
+<div id="container">
 
-<form method="post" id="add-form">
-  <input type="text" placeholder="title" id="title">
-  <input type="text" placeholder="description" id="description">
-  <input type="submit" name="" value="Set a Goal!" id="add">
-</form>
+<h2 id="welcome">Here is a list of your completed tasks and some data on your effeciency</h2>
 
 <div id="goals">
 {{#each completed}}
@@ -22,12 +16,28 @@
     {{#if description}}
     <p>{{description}}</p>
     {{/if}}
-    <p>Started: {{startDate}}</p>
-    <p>Completed: {{endDate}}</p>
-    <p id="total-time"></p>
+    <p id="start-time">Started: {{startDate}}</p>
+    <p id="end-time">Completed: {{endDate}}</p>
+    <p class="total-time"></p>
     <input type="hidden" id="id" value="{{_id}}">
   </div>
 {{/each}}
 </div>
 
+</div>
 
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    var taskTimes = document.getElementsByClassName('total-time');
+    Array.prototype.forEach.call(taskTimes, function(ele) {
+      calculateTimeDiff(ele);
+    });
+  }
+
+  function calculateTimeDiff(ele) {
+
+  }
+
+</script>

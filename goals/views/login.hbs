@@ -1,18 +1,16 @@
 <div class="navbar">
   <ul>
-    <li class="logo"><a href="/home">goals</a></li>
-    <div class="links">
-      <li><a href="/registration">Register</a></li>
-    </div>
+    <a href="/home"><li>goals</li></a>
+    <a href="/registration"><li>Register</li></a>
   </ul>
 </div>
 
-<h3 class="login-header">Login</h3>
-<p class="message">{{message}}</p>
 <div class="login-form">
+  <h3 class="login-header">Login</h3>
+  <p class="message">{{message}}</p>
   <form method="post">
     <input type="text" name="username" placeholder="username">
     <input type="password" name="password" placeholder="password">
-    <input type="submit" name="" value="Login">
+    <input id="submit" type="submit" name="" value="Login">
   </form>
 </div>

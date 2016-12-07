@@ -1,13 +1,13 @@
 <div class="navbar">
   <ul>
-    <li class="logo"><a href="/home">goals</a></li>
-    <div class="links">
-    </div>
+    <a href="/home"><li>goals</li></a>
+    <a href="/completed"><li>completed</li></a>
   </ul>
 </div>
 
-<p>Welcome {{user.username}}</p>
-<a href="/completed">Completed Tasks</a>
+<div id="container">
+
+<p id="welcome">Welcome {{user.username}}, you can set your goals below</p>
 
 <form method="post" id="add-form">
   <input type="text" placeholder="title" id="title">
@@ -29,6 +29,7 @@
 {{/each}}
 </div>
 
+</div>
 
 <script type="text/javascript">
   document.addEventListener('DOMContentLoaded', init);
