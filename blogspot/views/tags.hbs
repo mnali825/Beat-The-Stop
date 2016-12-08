@@ -1,5 +1,4 @@
-<a href="/admin">Add blog post</a>
-<a href="/">home</a>
+
 {{#each post}}
 <div class="post" style="background-image:url({{image}});">
   <a href="/posts/{{slug}}"><h1>{{title}}</h1></a>
@@ -8,11 +7,11 @@
   </div>
   <p class="read-more"><a href="/posts/{{slug}}">Read More</a></p>
 
-  <p>By: {{author}} - {{date}}</p>
-
   <div class="tags">
     <div class="header">Tags:</div>
-    {{#each tags}}<a href="/tags/{{this}}"><button>{{this}}</button></a>{{/each}}
+    {{#each tags}}<a href="{{this}}"><button>{{this}}</button></a>{{/each}}
   </div>
+
+  <p>By: {{author}} - {{date}}</p>
 </div>
 {{/each}}

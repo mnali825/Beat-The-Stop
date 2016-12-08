@@ -20,18 +20,20 @@ router.get('/admin', function(req, res) {
 });
 
 router.post('/admin', function(req, res) {
+  var tags = (req.body.tags).split(',');
+  console.log(tags);
   new Blog({
     title:req.body.title,
     image:req.body.image,
     body:req.body.body,
     author:req.body.author,
-    tags:req.body.tags
+    tags:tags
   }).save(function(err, post) {
     if (err) {
       res.render('add-post', {message:'There was an error when saving post to database'});
     } else {
-      res.render('add-post', {message:'successfully added!'});  
-    } 
+      res.render('add-post', {message:'successfully added!'});
+    }
   });
 });
 
@@ -64,6 +66,24 @@ router.get('/admin/comments', function(req, res) {
       }
     }));
   });
+});
+
+router.get('/tags/:searchtag', function(req, res) {
+  console.log(req.params.searchtag);
+  Blog.find(function(err, posts) {
+    var newPosts = posts.filter(function(ele) {
+      console.log('searching for ', req.params.searchtag);
+      console.log('tags ', ele.tags); 
+      console.log(ele.tags.indexOf(req.params.searchtag));
+      if (ele.tags.indexOf(req.params.searchtag) >= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    res.render('index', {post:newPosts});
+  });
+  
 });
 
 module.exports = router;

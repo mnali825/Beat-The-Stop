@@ -8,9 +8,25 @@ a {
   color: #00B7FF;
 }
 
+button {
+  padding:10px;
+  margin-right:15px;
+  border:none;
+
+}
+
+.container {
+  padding:50px;
+}
+
 .post {
   border:2px solid black;
   padding: 50px;
+}
+
+.post h1 {
+  background-color: white;
+  color:black;
 }
 
 .post-preview {
@@ -20,14 +36,18 @@ a {
   overflow: hidden;
 }
 
+.post-preview p {
+  background-color: white;
+  color:black;
+}
+
 .post-full {
   font-size: 1em;
-  line-height: 1em;
+  line-height: 1.5em;
 }
 
 .tag {
   height:1.5em;
-  width:100px;
   background-color: gray;
   padding:5px;
   border-radius: 5px;
@@ -40,15 +60,10 @@ a {
 
 .tags .header {
   line-height: 2.5em;
-  margin-top: -30px;
+  /*margin-top: -10px;*/
 }
 
 .tags a {
   text-decoration: none;
   color:white;
-}
-
-.read-more {
-  text-align: right;
-  margin-right:3em;
 }

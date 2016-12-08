@@ -13,7 +13,7 @@ var BlogSchema = new mongoose.Schema({
   date: {type:Date, default:Date.now()},
   author: String,
   comments: [CommentSchema],
-  tags:String
+  tags:[String]
 });
 
 BlogSchema.plugin(URLSlugs('title'));
