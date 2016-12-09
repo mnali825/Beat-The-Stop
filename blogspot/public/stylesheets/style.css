@@ -12,21 +12,52 @@ button {
   padding:10px;
   margin-right:15px;
   border:none;
+}
 
+nav {
+
+}
+
+nav ul {
+  height:100px;
+  background-color: black;
+  margin: 0;
+  display: inline-block;
+  width:100%;
+  padding:0;
+  list-style-type: none;
+  text-align: center;
+}
+
+nav ul li {
+  color:white;
+  margin-top:35px;
+  font-size: 2em;
+}
+
+nav ul a {
+  text-decoration: none;
 }
 
 .container {
   padding:50px;
+  padding-left: 150px;
+  padding-right: 150px;
 }
 
 .post {
   border:2px solid black;
   padding: 50px;
+  height:200px;
+  text-align: center;
+  padding-top:175px;
 }
 
-.post h1 {
+.title {
   background-color: white;
   color:black;
+  font-size: 2.5em;
+  text-decoration: none;
 }
 
 .post-preview {
@@ -47,10 +78,7 @@ button {
 }
 
 .tag {
-  height:1.5em;
-  background-color: gray;
-  padding:5px;
-  border-radius: 5px;
+  padding-top: 15px;
 }
 
 .tags {
@@ -66,4 +94,37 @@ button {
 .tags a {
   text-decoration: none;
   color:white;
+}
+
+.full-image {
+  width:100%;
+  height:350px;
+  overflow: hidden;
+}
+
+#comments h3{
+  text-align: center;
+}
+
+.comment {
+  width:35%;
+  border:2px solid black;
+  margin:auto;
+  margin-bottom: 4px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+}
+
+#comment-form {
+  text-align: center;
+}
+
+.author-date {
+  color:white;
+  background-color: black;
+}
+
+.filter {
+  text-align: center;
 }

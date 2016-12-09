@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
     if (err) {
       res.render('index', {message:'error retrieving posts from database'});
     } else {
-      res.render('index', {post:post});  
+      res.render('index', {post:post.reverse()});  
     }
   })
 });
@@ -81,9 +81,14 @@ router.get('/tags/:searchtag', function(req, res) {
         return false;
       }
     });
-    res.render('index', {post:newPosts});
+    res.render('index', {post:newPosts.reverse(), filter:req.params.searchtag});
+  });  
+});
+
+router.get('/authors/:author', function(req, res) {
+  Blog.find({'author':req.params.author}, function(err, post) {
+    res.render('index', {post:post.reverse(), author:req.params.author});
   });
-  
 });
 
 module.exports = router;

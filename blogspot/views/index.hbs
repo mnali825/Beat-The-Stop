@@ -1,18 +1,32 @@
-<a href="/admin">Add blog post</a>
-<a href="/">home</a>
+<nav>
+  <ul>
+    <a href="/"><li>Home</li></a>
+  </ul>
+</nav>
+
+{{#if filter}}
+<h3 class="filter">Filtering with {{filter}} Tag</h3>
+{{/if}}
+
+{{#if author}}
+<h3 class="filter">Articles by {{author}}</h3>
+{{/if}}
+
 {{#each post}}
 <div class="post" style="background-image:url({{image}});">
-  <a href="/posts/{{slug}}"><h1>{{title}}</h1></a>
-  <div class="post-preview">
+  <a  class="title" href="/posts/{{slug}}">&nbsp;&nbsp;{{title}}&nbsp;&nbsp;</a>
+  <!-- <div class="post-preview">
     <p>{{body}}</p>
-  </div>
-  <p class="read-more"><a href="/posts/{{slug}}">Read More</a></p>
+  </div> -->
+  <!-- <p class="read-more"><a href="/posts/{{slug}}">Read More</a></p> -->
 
-  <p>By: {{author}} - {{date}}</p>
+  <p><span class="author-date">By: <a href="/authors/{{author}}">{{author}}</a> - {{date}}</span></p>
 
-  <div class="tags">
+  <!-- <div class="tags">
     <div class="header">Tags:</div>
     {{#each tags}}<a href="/tags/{{this}}"><button>{{this}}</button></a>{{/each}}
-  </div>
+  </div> -->
 </div>
 {{/each}}
+
+<a href="/admin">Add blog post</a>

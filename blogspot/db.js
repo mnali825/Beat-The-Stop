@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
 
 var CommentSchema = new mongoose.Schema({
   comment:String,
-  user:String
+  user:String,
+  date:{type:Date, default:Date.now()}
 });
 
 var BlogSchema = new mongoose.Schema({

@@ -1,39 +1,46 @@
 <nav>
-  <a href="/">home</a>
+  <ul>
+    <a href="/"><li>Home</li></a>
+  </ul>
 </nav>
+
+<div class="full-image" style="background-image:url({{post.image}})">
+<!-- <img src="{{post.image}}" style="height:200px;"> -->
+</div>
 
 <div class="container">
 
-<div style="text-align:center">
-<img src="{{post.image}}" class="full-image" style="height:200px;">
-</div>
+  <div class="">
+    <h1 id="title">{{post.title}}</h1>
+    <div class="post-full">
+      <p>{{post.body}}</p>
+    </div>
+    <p>By: <a href="/authors/{{post.author}}">{{post.author}}</a> - {{post.date}}</p>
 
-<div class="">
-  <h1 id="title">{{post.title}}</h1>
-  <div class="post-full">
-    <p>{{post.body}}</p>
+    <div class="tags">
+      <p>Tags:</p>
+      {{#each post.tags}}<a href="../tags/{{this}}"><button>{{this}}</button></a>{{/each}}
+    </div>
   </div>
-  <p>By: {{post.author}} - {{post.date}}</p>
 
-  <div class="tags">
-    <div class="">Tags:</div>
-    {{#each post.tags}}<a href="../tags/{{this}}"><button>{{this}}</button></a>{{/each}}
+  
+  <div id="comments">
+  <h3>Comments</h3>
+  {{#each post.comments}}
+    <div class="comment">
+      <p>{{comment}}</p>
+      <p>By: {{user}}</p>
+    </div>
+  {{/each}}
   </div>
-</div>
 
-{{#each post.comments}}
-<div id="comments">
-  <div class="comment">
-    <h4>{{comment}}</h4>
-    <p>By: {{user}}</p>
+  <div id="comment-form">
+    <h4>Add a Comment:</h4>
+    <form id="c-form">
+      <input type="text" name="comment" id="comment">
+      <p>By: <input type="text" name="user" value="anonymous" id="user"><input type="submit" id="add-comment"></p>
+    </form>
   </div>
-</div>
-{{/each}}
-<form>
-  <input type="text" name="comment" id="comment">
-  <input type="text" name="user" value="anonymous" id="user">
-  <input type="submit" id="add-comment">
-</form>
 
 </div>
 <script type="text/javascript">
@@ -55,23 +62,30 @@
     var user = document.getElementById('user').value;
     var title = document.getElementById('title').textContent;
     req.send('comment='+comment+'&'+'user='+user+'&'+'title='+title);
+    var form = document.getElementById('c-form').reset();
   }
 
   function handleUpdate(event) {
+    event.preventDefault();
     var req = new XMLHttpRequest();
-    req.open('get', 'http://localhost:3000/admin/comments', true);
+    var url = 'http://localhost:3000/admin/comments/?title=' + document.getElementById('title').textContent;
+    req.open('get', url, true);
 
     req.addEventListener('load', function() {
       if (req.status >= 200 || req.status < 400) {
         var comments = JSON.parse(req.responseText);
         var last = comments.length - 1;
+
         var div = document.createElement('div');
-        var oldDiv = document.getElementById('comments');
-        div.appendChild(document.createElement('h4')).textContent = comments[last].comment;
+        div.appendChild(document.createElement('p')).textContent = comments[last].comment;
         div.appendChild(document.createElement('p')).textContent = comments[last].user;
         div.classList.add('comment');
+
+        var oldDiv = document.getElementById('comments');
         oldDiv.appendChild(div);
+       
       }
     });
+    req.send();
   }
 </script>
