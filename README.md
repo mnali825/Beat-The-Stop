@@ -1,5 +1,5 @@
 # Beat-The-Stop
-Making web apps on my daily commute (Princeton -> NYC)
+Making web apps on my daily commute (Princeton->NYC : 1.5-2hrs)
 
 Without the opportunity to attend a hackathon... I thought I'd make my own!
 
